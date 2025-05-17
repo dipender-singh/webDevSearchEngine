@@ -1,0 +1,14 @@
+# Ignore node modules
+node_modules/
+
+# Ignore system files
+.DS_Store
+
+# Ignore log files
+*.log
+
+# Ignore environment config
+.env
+
+#Ignore Search Logo
+Logo1.jpeg
