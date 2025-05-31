@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css"> 
+    <script src="https://kit.fontawesome.com/d98634af36.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
     <div  class="mainDiv">
         <div class="topDiv">
-            <p> This Div will contain the links for leetcode and my maang.in account</p>
+            <p>Data Structres and Algorithms Search Engine</p>
             <div class="linksDiv">
                 <div class="leetcodeDiv">
                     <a href="https://leetcode.com/u/singha2244/">LeetCode</a>
@@ -25,12 +27,21 @@
         </div>
         <div class="imageDiv">
             <div class="imageConatiner">
-                            <img class= "logo" src="Logo1.jpeg" alt="Internet Connection is slow">
+                            <img class= "logo" src="Logo1-removebg-preview.png" alt="Internet Connection is slow">
             </div>
         </div>
         <div class="searchBarDiv">
-            
+            <div class = "containSearchBar">
+                <div class="row">
+                <input type="text" id="inputBox" placeholder="I understand nothing" autocomplete="off">
+                <button class="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <div class = "resultsBox">
+                <ul class = "resultsList"></ul>
+            </div>
+            </div>
         </div>
     </div>
+    <script src="autocomplete.js"></script>
 </body>
 </html>

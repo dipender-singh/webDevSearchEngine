@@ -1,3 +1,7 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
 .imageDiv{
     display: flex;
     justify-content: center;
@@ -43,4 +47,55 @@
     padding: 2px;
     border: 1px solid currentColor;
     border-radius: 5px;
+}
+.searchBarDiv{
+    height: 400px;
+}
+
+.containSearchBar{
+    width: 600px;
+    margin: 100px auto 0;
+    border-radius: 5px;
+}
+
+.row{
+    display: flex;
+    align-items: center;
+}
+
+input{
+    flex: 1;
+    height: 30px;
+    border: 0.5;
+    font-size: 18px;
+    color: #333;
+    border-radius: 15px;
+}
+
+.searchButton{
+    height: 30px;
+    background: transparent;
+    border: 0;
+    outline: 0;
+}
+
+button .fa-solid{
+    cursor: pointer;
+}
+
+.resultsBox{
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+.resultsBox ul{
+    padding: 15px 10px; 
+}
+
+.resultsBox ul li{
+    list-style: none;
+    border-radius: 3px;
+    padding: 15px 10px;
+    cursor: pointer; 
+    background-color: white;
 }
