@@ -154,10 +154,10 @@ async function scrapeCodeForcesProblems(params) {
         const codeforcesUrl = 'https://codeforces.com/problemset/page/${i}';
 
         await page.goto(codeforcesUrl,{
-            waitUntil: "domcontentloaded"
+            waitUntil: "domcontentloaded",
         });
 
-        const codeforcesProblemsSelector = "table.problems tr td:nth-of-type(2) > div: first-of-type > a"; 
+        const codeforcesProblemsSelector = "table.problems tr td:nth-of-type(2) > div:first-of-type > a"; 
 
         const links = await page.evaluate((sel) => {
             const listOfNodeElements = document.querySelectorAll(sel);
@@ -177,7 +177,7 @@ async function scrapeCodeForcesProblems(params) {
                     const title = document.querySelector(".problem-statement .title")
                     .textContent.split(". ")[1];
 
-                    const description = document.querySelector(".problem-statement > div: nth-of-type(2)").textContent;
+                    const description = document.querySelector(".problem-statement > div:nth-of-type(2)").textContent;
                     
                     return {title,description};
             });
@@ -188,7 +188,6 @@ async function scrapeCodeForcesProblems(params) {
             });
             } catch (err) {
                 console.error(`!!!! Failed to Scrape the Problem: ${pageLink}`, err);
-                throw err;
             }
         }
     }
@@ -202,3 +201,4 @@ async function scrapeCodeForcesProblems(params) {
 }
 
 scrapeLeetCodeProblems();
+scrapeCodeForcesProblems();
