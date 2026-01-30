@@ -129,4 +129,76 @@ await fsPromises.writeFile(
 await browser.close();
 }
 
+async function scrapeCodeForcesProblems(params) {
+         //Launch the browser using Puppeteer
+    const browser = await puppeteer.launch({
+        headless: false,
+        defaultViewport: null,
+        args: ["--disable-blink-features=AutomationControlled"] //This will help us to bypass specifc bot's that will hamper us in opening the browser 
+    });
+
+    //Open the New Tab
+    const newTab = await browser.newPage();
+    const page = newTab;
+    //When opening the New Tab there can also be some bots that can cause some issue so we need to overcome them as well 
+    //We will have to make our puppeter act like a user is accessing the browser 
+    await page.setUserAgent(
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+    );
+
+    const cfProblems = [];
+    const target = 20;
+
+    //Go to CodeForces URL
+    for(let i = 0 ; i < target ; i++){
+        const codeforcesUrl = 'https://codeforces.com/problemset/page/${i}';
+
+        await page.goto(codeforcesUrl,{
+            waitUntil: "domcontentloaded"
+        });
+
+        const codeforcesProblemsSelector = "table.problems tr td:nth-of-type(2) > div: first-of-type > a"; 
+
+        const links = await page.evaluate((sel) => {
+            const listOfNodeElements = document.querySelectorAll(sel);
+            return Array.from(listOfNodeElements).map((a) => a.href);
+        },codeforcesProblemsSelector);
+
+        for(let i = 0 ; i < target ; i++){
+            const pageLink = links[i];
+
+            try{
+                page.goto(pageLink,{
+                    waitUntil: "domcontentloaded"
+                });
+
+                //Now we want to get the Title and the Problem Description after reaching to that page;
+                const{title,description} = await page.evaluate(() => {
+                    const title = document.querySelector(".problem-statement .title")
+                    .textContent.split(". ")[1];
+
+                    const description = document.querySelector(".problem-statement > div: nth-of-type(2)").textContent;
+                    
+                    return {title,description};
+            });
+            cfProblems.push({
+                title,
+                url: pageLink,
+                description,
+            });
+            } catch (err) {
+                console.error(`!!!! Failed to Scrape the Problem: ${pageLink}`, err);
+                throw err;
+            }
+        }
+    }
+
+    await fsPromises.mkdir("./problems",{recursive: true});
+    await fsPromises.writeFile(
+        './problems/codeforcesProblems.json',
+        JSON.stringify(cfProblems,null,2)
+    );
+    await browser.close();
+}
+
 scrapeLeetCodeProblems();
