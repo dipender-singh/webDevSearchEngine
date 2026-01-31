@@ -147,39 +147,42 @@ async function scrapeCodeForcesProblems(params) {
     );
 
     const cfProblems = [];
-    const target = 20;
-
+    const target = 5;
+    let codeforcesUrl;
+    let links;
     //Go to CodeForces URL
-    for(let i = 0 ; i < target ; i++){
-        const codeforcesUrl = 'https://codeforces.com/problemset/page/${i}';
-
+    for(let i = 1 ; i <= target ; i++){
+        codeforcesUrl = `https://codeforces.com/problemset/page/${i}`;
         await page.goto(codeforcesUrl,{
             waitUntil: "domcontentloaded",
         });
 
         const codeforcesProblemsSelector = "table.problems tr td:nth-of-type(2) > div:first-of-type > a"; 
 
-        const links = await page.evaluate((sel) => {
+        links = await page.evaluate((sel) => {
             const listOfNodeElements = document.querySelectorAll(sel);
             return Array.from(listOfNodeElements).map((a) => a.href);
         },codeforcesProblemsSelector);
-
-        for(let i = 0 ; i < target ; i++){
+        let n = links.length;
+        for(let i = 0 ; i < n ; i++){
             const pageLink = links[i];
 
             try{
-                page.goto(pageLink,{
+                await page.goto(pageLink,{
                     waitUntil: "domcontentloaded"
                 });
 
                 //Now we want to get the Title and the Problem Description after reaching to that page;
-                const{title,description} = await page.evaluate(() => {
-                    const title = document.querySelector(".problem-statement .title")
+                const{ title, description } = await page.evaluate(() => { //here
+                    const title = document
+                    .querySelector(".problem-statement .title")
                     .textContent.split(". ")[1];
 
-                    const description = document.querySelector(".problem-statement > div:nth-of-type(2)").textContent;
+                    const description = document
+                    .querySelector(".problem-statement > div:nth-of-type(2)")
+                    .textContent;
                     
-                    return {title,description};
+                    return { title, description };
             });
             cfProblems.push({
                 title,
