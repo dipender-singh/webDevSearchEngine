@@ -4,7 +4,9 @@
   "description": "",
   "main": "autocomplete.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "scrape": "node scrapeLogic.js",
+    "merge": "node merge.js",
+    "start": "node index.js" 
   },
   "repository": {
     "type": "git",

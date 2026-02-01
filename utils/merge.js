@@ -22,3 +22,5 @@ console.log('Files merged successfully into merged.json');
 }
 
 mergeLeetcodeAndCodeforcesData();
+
+//TODO -> Learn how to define custom scripts in package.json (Completed)
