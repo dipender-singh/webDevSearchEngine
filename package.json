@@ -6,7 +6,7 @@
   "scripts": {
     "scrape": "node scrapeLogic.js",
     "merge": "node merge.js",
-    "start": "node index.js" 
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,9 @@
   },
   "homepage": "https://github.com/dipender-singh/webDevSearchEngine#readme",
   "dependencies": {
-    "puppeteer": "^24.35.0"
+    "express": "^5.2.1",
+    "natural": "^8.1.0",
+    "puppeteer": "^24.35.0",
+    "stopword": "^3.1.5"
   }
 }
